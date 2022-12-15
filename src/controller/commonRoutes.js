@@ -3,14 +3,12 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    addStudent,
-    addCourse,
-    listStudent
+    addEmployee,
+    getInsurance
   } = require('./commonController');
 
 
-router.post('/createStudent', addStudent);
-router.post('/createCourse', addCourse);
-router.get('/student', listStudent);
+router.post('/employee', addEmployee);
+router.get('/insurance', getInsurance);
 
 module.exports = router
