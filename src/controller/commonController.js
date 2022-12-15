@@ -1,4 +1,5 @@
 const Employee = require("../model/Employee")
+const moment = require("moment")
 
 
 const addEmployee = async(req,res) =>{
@@ -27,7 +28,8 @@ const getInsurance = async(req,res) =>{
     try {
         const {age,dependents,house,income,marital_status,risk_questions,vehicle }=req.body
         const result = {disability : "", life : "", auto: "", home: ""}
-        let length = risk_questions.length;
+        let currentYear = moment().format("YYYY");
+
         let life_score=0 , disability_score =0,auto_score =0, home_score=0;
         let sum=0
         for(let i=0; i<3; i++){
@@ -37,8 +39,6 @@ const getInsurance = async(req,res) =>{
         disability_score=sum;
         auto_score=sum;
         home_score =sum;
-        console.log(sum)
-        
         
         if(age <30){
             life_score = life_score-2;
@@ -65,6 +65,10 @@ const getInsurance = async(req,res) =>{
             disability_score=disability_score+1;
             life_score=life_score+1;
         }
+        if((currentYear - vehicle.year)<= 5 ){
+            auto_score = auto_score+1;
+        }
+
         if(age > 60){
             result.disability = "ineligible";
             result.life= "ineligible"
